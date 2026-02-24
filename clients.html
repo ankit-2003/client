@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindBridge — Clients</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f6fa;--surface:#fff;--s2:#f0f2f8;--border:#e4e8f0;--b2:#d0d6e8;--indigo:#4f63d2;--il:#eef0fd;--teal:#0ea5a0;--tl:#e6f7f7;--amber:#d97706;--al:#fef3c7;--rose:#e5445a;--rl:#fef2f2;--violet:#7c3aed;--vl:#f5f0ff;--sky:#0284c7;--sl:#e0f2fe;--green:#059669;--gl:#d1fae5;--text:#1a1f36;--muted:#6b7280;--dim:#9ca3af;--sh:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);--shm:0 4px 16px rgba(0,0,0,.10);--shl:0 8px 32px rgba(0,0,0,.15);--r:14px;--rs:8px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;display:flex;font-size:14px;}
+/* SIDEBAR */
+.sb{width:228px;min-height:100vh;background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:100;box-shadow:2px 0 8px rgba(0,0,0,.04);}
+.logo{padding:22px 20px 18px;border-bottom:1px solid var(--border);}
+.lm{font-family:'Lora',serif;font-size:21px;font-weight:700;color:var(--indigo);}
+.lm span{color:var(--teal);}
+.ls{font-size:10.5px;color:var(--dim);margin-top:2px;letter-spacing:1px;text-transform:uppercase;font-weight:500;}
+.nav{padding:10px 12px 0;}
+.nlb{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);padding:10px 8px 5px;font-weight:600;}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:var(--rs);cursor:pointer;transition:all .18s;color:var(--muted);font-size:13.5px;font-weight:500;margin-bottom:2px;}
+.ni:hover{background:var(--s2);color:var(--text);}
+.ni.active{background:var(--il);color:var(--indigo);font-weight:600;}
+.nic{font-size:15px;width:18px;text-align:center;}
+.nb{margin-left:auto;background:var(--rose);color:#fff;font-size:10px;font-weight:700;border-radius:20px;padding:2px 7px;}
+.nbb{margin-left:auto;background:var(--indigo);color:#fff;font-size:10px;font-weight:700;border-radius:20px;padding:2px 7px;}
+.sbf{margin-top:auto;padding:14px 16px;border-top:1px solid var(--border);background:var(--s2);}
+.ci{display:flex;align-items:center;gap:10px;}
+.av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--teal));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0;}
+.cn{font-size:13px;font-weight:600;}
+.cs{display:flex;align-items:center;gap:4px;font-size:10.5px;color:var(--teal);font-weight:600;margin-top:1px;}
+.cs::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);}
+/* MAIN */
+.main{margin-left:228px;flex:1;max-width:calc(100vw - 228px);}
+/* PAGE HEADER */
+.ph{background:var(--surface);border-bottom:1px solid var(--border);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--sh);position:sticky;top:0;z-index:50;}
+.phl h1{font-family:'Lora',serif;font-size:22px;font-weight:700;letter-spacing:-.3px;}
+.phl p{color:var(--muted);font-size:13px;margin-top:2px;font-weight:500;}
+.ha{display:flex;align-items:center;gap:10px;}
+/* BUTTONS */
+.btn{display:flex;align-items:center;gap:7px;padding:9px 16px;border-radius:var(--rs);font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .2s;}
+.bp{background:var(--indigo);color:#fff;}
+.bp:hover{background:#3a50c5;}
+.bg{background:var(--s2);color:var(--text);border:1.5px solid var(--border);}
+.bg:hover{border-color:var(--indigo);color:var(--indigo);}
+.bs{padding:6px 12px;font-size:12px;}
+.bd{background:var(--rl);color:var(--rose);border:1.5px solid #fecaca;}
+.bd:hover{background:var(--rose);color:#fff;}
+/* STATS STRIP */
+.ss{display:grid;grid-template-columns:repeat(5,1fr);background:var(--surface);border-bottom:1px solid var(--border);}
+.st{padding:14px 20px;border-right:1px solid var(--border);text-align:center;cursor:pointer;transition:all .2s;border-bottom:3px solid transparent;}
+.st:last-child{border-right:none;}
+.st:hover{background:var(--s2);}
+.st.af{background:var(--il);border-bottom-color:var(--indigo);}
+.sv{font-family:'Lora',serif;font-size:26px;font-weight:700;line-height:1;}
+.sl2{font-size:11px;color:var(--muted);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+/* PAGE BODY */
+.pb{padding:22px 32px;}
+.fr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+.sb2{display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rs);padding:8px 14px;flex:1;min-width:220px;max-width:300px;box-shadow:var(--sh);transition:border-color .2s;}
+.sb2:focus-within{border-color:var(--indigo);}
+.sb2 input{border:none;background:transparent;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);outline:none;width:100%;}
+.sb2 input::placeholder{color:var(--dim);}
+.fs{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rs);padding:8px 28px 8px 12px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);cursor:pointer;outline:none;font-weight:500;box-shadow:var(--sh);transition:border-color .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+.fs:focus{border-color:var(--indigo);}
+.vt{display:flex;border:1.5px solid var(--border);border-radius:var(--rs);overflow:hidden;background:var(--surface);}
+.vb{padding:7px 13px;background:transparent;cursor:pointer;border:none;transition:all .2s;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:var(--muted);}
+.vb.active{background:var(--indigo);color:#fff;}
+.vb:hover:not(.active){background:var(--s2);}
+/* CARD GRID */
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(282px,1fr));gap:16px;}
+.cc{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:all .2s;}
+.cc:hover{border-color:var(--indigo);box-shadow:var(--shm);transform:translateY(-2px);}
+.cch{padding:18px 18px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;position:relative;}
+.cch::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.c-in .cch::before{background:var(--indigo);}
+.c-sk .cch::before{background:var(--sky);}
+.c-am .cch::before{background:var(--amber);}
+.c-vi .cch::before{background:var(--violet);}
+.c-te .cch::before{background:var(--teal);}
+.c-ro .cch::before{background:var(--rose);}
+.cav{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;}
+.cin{flex:1;min-width:0;}
+.cna{font-family:'Lora',serif;font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.csu{font-size:11.5px;color:var(--muted);margin-top:3px;}
+.sd{width:9px;height:9px;border-radius:50%;position:absolute;top:14px;right:14px;border:2px solid var(--surface);}
+.sd.on{background:var(--green);}
+.sd.ho{background:var(--amber);}
+.sd.cl{background:var(--dim);}
+.ccb{padding:14px 18px;}
+.ctags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.ctag{font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:20px;}
+.cstats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.cst{padding:9px 6px;text-align:center;border-right:1px solid var(--border);}
+.cst:last-child{border-right:none;}
+.csv{font-family:'Lora',serif;font-size:16px;font-weight:700;}
+.csl{font-size:10px;color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-top:1px;}
+.ccf{padding:12px 18px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--s2);}
+.af2{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--rl);color:var(--rose);margin-bottom:10px;}
+/* TABLE */
+.ct{width:100%;border-collapse:collapse;}
+.ct thead tr{background:var(--s2);border-bottom:2px solid var(--border);}
+.ct th{padding:11px 14px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);text-align:left;cursor:pointer;white-space:nowrap;}
+.ct th:hover{color:var(--indigo);}
+.ct tbody tr{border-bottom:1px solid var(--border);transition:background .15s;cursor:pointer;}
+.ct tbody tr:hover{background:#fafbff;}
+.ct td{padding:13px 14px;font-size:13px;vertical-align:middle;}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.badge::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.ba{background:var(--gl);color:var(--green);}
+.ba::before{background:var(--green);}
+.bh{background:var(--al);color:var(--amber);}
+.bh::before{background:var(--amber);}
+.bc{background:var(--s2);color:var(--muted);}
+.bc::before{background:var(--dim);}
+.bhi{background:var(--rl);color:var(--rose);}
+.bhi::before{background:var(--rose);}
+.bme{background:var(--al);color:var(--amber);}
+.bme::before{background:var(--amber);}
+.blo{background:var(--gl);color:var(--green);}
+.blo::before{background:var(--green);}
+.pbar{height:5px;background:var(--s2);border-radius:20px;overflow:hidden;width:80px;border:1px solid var(--border);}
+.pf{height:100%;border-radius:20px;}
+.mav{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.ai{width:28px;height:28px;border-radius:6px;background:var(--s2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;transition:all .2s;display:inline-flex;}
+.ai:hover{background:var(--il);border-color:var(--indigo);}
+.abs{display:flex;gap:5px;}
+.pg{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-top:1px solid var(--border);background:var(--s2);}
+.pi{font-size:12.5px;color:var(--muted);font-weight:500;}
+.pbs{display:flex;gap:4px;}
+.pb2{width:28px;height:28px;border-radius:6px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--muted);}
+.pb2.active{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+.pb2:hover:not(.active){border-color:var(--indigo);color:var(--indigo);}
+/* DRAWER */
+.do{position:fixed;inset:0;background:rgba(26,31,54,.35);z-index:200;opacity:0;pointer-events:none;transition:opacity .25s;}
+.do.open{opacity:1;pointer-events:all;}
+.dr{position:fixed;top:0;right:-600px;width:580px;height:100vh;background:var(--surface);box-shadow:var(--shl);z-index:201;transition:right .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;}
+.dr.open{right:0;}
+.drh{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);z-index:10;}
+.drt{font-family:'Lora',serif;font-size:18px;font-weight:700;}
+.drc{width:32px;height:32px;border-radius:50%;background:var(--s2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s;}
+.drc:hover{background:var(--rl);color:var(--rose);}
+.drb{padding:24px;flex:1;}
+.drs{margin-bottom:20px;}
+.drst{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--dim);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.drst::after{content:'';flex:1;height:1px;background:var(--border);}
+.ph2{display:flex;align-items:center;gap:18px;padding:16px;background:linear-gradient(120deg,var(--il),var(--tl));border-radius:12px;margin-bottom:20px;border:1px solid rgba(79,99,210,.15);}
+.pav{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0;background:linear-gradient(135deg,var(--indigo),var(--teal));box-shadow:0 4px 12px rgba(79,99,210,.3);}
+.pin h2{font-family:'Lora',serif;font-size:18px;font-weight:700;}
+.pin p{font-size:12px;color:var(--muted);margin-top:3px;}
+.ptag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;background:rgba(79,99,210,.12);color:var(--indigo);margin-right:4px;margin-top:6px;display:inline-block;}
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ii{background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+.ii label{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:2px;}
+.ii .val{font-size:13px;font-weight:600;color:var(--text);}
+.pr{margin-bottom:12px;}
+.prh{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.prl{font-size:13px;font-weight:500;}
+.prv{font-size:12px;font-weight:700;}
+.prb{height:7px;background:var(--s2);border-radius:20px;overflow:hidden;border:1px solid var(--border);}
+.prf{height:100%;border-radius:20px;}
+.sli{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:var(--s2);border:1px solid var(--border);margin-bottom:8px;}
+.sln{font-family:'Lora',serif;font-size:14px;font-weight:700;color:var(--dim);min-width:28px;}
+.sld{font-size:12px;color:var(--muted);min-width:90px;font-weight:500;}
+.slno{font-size:12px;color:var(--text);font-style:italic;flex:1;}
+.tri{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:var(--s2);border:1px solid var(--border);margin-bottom:8px;}
+.tric{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.trii{flex:1;min-width:0;}
+.trin{font-size:13px;font-weight:600;}
+.trid{font-size:11px;color:var(--muted);margin-top:1px;}
+.trs{font-size:14px;font-weight:700;}
+.drf{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;background:var(--s2);position:sticky;bottom:0;}
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(26,31,54,.45);backdrop-filter:blur(4px);z-index:300;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
+.mo.open{opacity:1;pointer-events:all;}
+.md{background:var(--surface);border-radius:18px;padding:28px;width:100%;max-width:520px;box-shadow:var(--shl);position:relative;transform:translateY(20px);transition:transform .25s;max-height:90vh;overflow-y:auto;}
+.mo.open .md{transform:translateY(0);}
+.mc{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:var(--s2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s;}
+.mc:hover{background:var(--rl);color:var(--rose);}
+.mt{font-family:'Lora',serif;font-size:19px;font-weight:700;margin-bottom:5px;}
+.ms{font-size:12.5px;color:var(--muted);margin-bottom:20px;font-weight:500;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.fg{margin-bottom:12px;}
+.fl{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:.5px;}
+.fc{width:100%;padding:9px 12px;background:var(--s2);border:1.5px solid var(--border);border-radius:var(--rs);font-family:'Inter',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .2s;appearance:none;}
+.fc:focus{border-color:var(--indigo);background:#fff;}
+.fc::placeholder{color:var(--dim);}
+select.fc{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;cursor:pointer;}
+.na{width:100%;min-height:75px;resize:vertical;padding:9px 12px;background:var(--s2);border:1.5px solid var(--border);border-radius:var(--rs);font-family:'Inter',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .2s;line-height:1.6;}
+.na:focus{border-color:var(--indigo);background:#fff;}
+.ff{display:flex;gap:10px;margin-top:20px;}
+#toast{position:fixed;bottom:28px;right:28px;background:#1a1f36;color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:var(--shl);z-index:500;opacity:0;transition:opacity .3s;pointer-events:none;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px;}
+</style>
+</head>
+<body>
+<aside class="sb">
+  <div class="logo"><div class="lm">Mind<span>Bridge</span></div><div class="ls">Counsellor Portal</div></div>
+  <nav class="nav">
+    <div class="nlb">Main</div>
+    <div class="ni" onclick="location.href='dashboard.html'"><span class="nic">⊞</span> Dashboard</div>
+    <div class="ni" onclick="location.href='appointments.html'"><span class="nic">📅</span> Appointments <span class="nb">3</span></div>
+    <div class="ni active"><span class="nic">👥</span> Clients</div>
+    <div class="ni" onclick="location.href='sessions.html'"><span class="nic">⏱</span> Sessions</div>
+    <div class="nlb">Tools</div>
+    <div class="ni"><span class="nic">📝</span> Assessments</div>
+    <div class="ni"><span class="nic">📊</span> Results</div>
+    <div class="ni"><span class="nic">📚</span> Resources</div>
+    <div class="ni"><span class="nic">🎯</span> Goals</div>
+    <div class="ni"><span class="nic">💬</span> Messages <span class="nbb">7</span></div>
+    <div class="nlb">Reports</div>
+    <div class="ni"><span class="nic">📈</span> Analytics</div>
+    <div class="ni"><span class="nic">⚙️</span> Settings</div>
+  </nav>
+  <div class="sbf"><div class="ci"><div class="av">SA</div><div><div class="cn">Dr. Sarah Ahmed</div><div class="cs">Online</div></div></div></div>
+</aside>
+
+<main class="main">
+  <div class="ph">
+    <div class="phl"><h1>👥 Clients</h1><p>54 active clients · 6 new this month · 2 high-risk flags</p></div>
+    <div class="ha">
+      <button class="btn bg bs">📤 Export</button>
+      <button class="btn bp" onclick="openModal()">＋ Add Client</button>
+    </div>
+  </div>
+  <div class="ss">
+    <div class="st af"><div class="sv" style="color:var(--indigo)">54</div><div class="sl2">Total Active</div></div>
+    <div class="st"><div class="sv" style="color:var(--green)">6</div><div class="sl2">New Month</div></div>
+    <div class="st"><div class="sv" style="color:var(--amber)">8</div><div class="sl2">On Hold</div></div>
+    <div class="st"><div class="sv" style="color:var(--rose)">2</div><div class="sl2">High Risk</div></div>
+    <div class="st"><div class="sv" style="color:var(--muted)">12</div><div class="sl2">Closed</div></div>
+  </div>
+  <div class="pb">
+    <div class="fr">
+      <div class="sb2"><span style="color:var(--dim)">🔍</span><input type="text" placeholder="Search by name, concern…" oninput="filterClients(this.value)"></div>
+      <select class="fs"><option>All Status</option><option>Active</option><option>On Hold</option><option>Closed</option></select>
+      <select class="fs"><option>All Concerns</option><option>Anxiety</option><option>Depression</option><option>Stress</option><option>Grief</option><option>Career</option></select>
+      <select class="fs"><option>All Risk Levels</option><option>High Risk</option><option>Medium</option><option>Low</option></select>
+      <select class="fs"><option>Sort: Last Session</option><option>Name A–Z</option><option>Sessions ↓</option><option>Risk Level</option></select>
+      <div style="margin-left:auto">
+        <div class="vt">
+          <button class="vb active" id="btn-grid" onclick="setView('grid')">⊞ Cards</button>
+          <button class="vb" id="btn-list" onclick="setView('list')">☰ Table</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRID -->
+    <div id="grid-view">
+      <div class="cg" id="clients-grid">
+
+        <div class="cc c-in" onclick="openDrawer()" data-name="riya kapoor">
+          <div class="cch"><div class="cav" style="background:var(--il);color:var(--indigo)">RK</div><div class="cin"><div class="cna">Riya Kapoor</div><div class="csu">Female · 24 yrs · Student</div></div><div class="sd on"></div></div>
+          <div class="ccb">
+            <div class="af2">🚨 High Risk — PHQ-9: 18/27</div>
+            <div class="ctags"><span class="ctag" style="background:var(--rl);color:var(--rose)">Anxiety</span><span class="ctag" style="background:var(--vl);color:var(--violet)">Depression</span></div>
+            <div class="cstats"><div class="cst"><div class="csv" style="color:var(--indigo)">18</div><div class="csl">Sessions</div></div><div class="cst"><div class="csv" style="color:var(--rose)">68%</div><div class="csl">Severity</div></div><div class="cst"><div class="csv" style="color:var(--teal)">↑32%</div><div class="csl">Progress</div></div></div>
+          </div>
+          <div class="ccf"><button class="btn bp bs" style="flex:1;justify-content:center" onclick="event.stopPropagation();openDrawer()">View Profile</button><button class="btn bg bs" onclick="event.stopPropagation();location.href='appointments.html'">📅 Book</button><button class="btn bg bs" onclick="event.stopPropagation();showToast('Message sent')">💬</button></div>
+        </div>
+
+        <div class="cc c-sk" onclick="openDrawer()" data-name="arjun mehta">
+          <div class="cch"><div class="cav" style="background:var(--sl);color:var(--sky)">AM</div><div class="cin"><div class="cna">Arjun Mehta</div><div class="csu">Male · 19 yrs · Student</div></div><div class="sd on"></div></div>
+          <div class="ccb">
+            <div class="ctags"><span class="ctag" style="background:var(--sl);color:var(--sky)">Academic Stress</span><span class="ctag" style="background:var(--al);color:var(--amber)">Anxiety</span></div>
+            <div class="cstats"><div class="cst"><div class="csv" style="color:var(--indigo)">15</div><div class="csl">Sessions</div></div><div class="cst"><div class="csv" style="color:var(--amber)">55%</div><div class="csl">Severity</div></div><div class="cst"><div class="csv" style="color:var(--teal)">↑45%</div><div class="csl">Progress</div></div></div>
+          </div>
+          <div class="ccf"><button class="btn bp bs" style="flex:1;justify-content:center" onclick="event.stopPropagation();openDrawer()">View Profile</button><button class="btn bg bs" onclick="event.stopPropagation()">📅 Book</button><button class="btn bg bs" onclick="event.stopPropagation();showToast('Message sent')">💬</button></div>
+        </div>
+
+        <div class="cc c-am" onclick="openDrawer()" data-name="priya sharma">
+          <div class="cch"><div class="cav" style="background:var(--al);color:var(--amber)">PS</div><div class="cin"><div class="cna">Priya Sharma</div><div class="csu">Female · 26 yrs · Professional</div></div><div class="sd on"></div></div>
+          <div class="ccb">
+            <div class="ctags"><span class="ctag" style="background:var(--al);color:var(--amber)">Career</span><span class="ctag" style="background:var(--il);color:var(--indigo)">Work-Life Balance</span></div>
+            <div class="cstats"><div class="cst"><div class="csv" style="color:var(--indigo)">12</div><div class="csl">Sessions</div></div><div class="cst"><div class="csv" style="color:var(--green)">28%</div><div class="csl">Severity</div></div><div class="cst"><div class="csv" style="color:var(--teal)">↑80%</div><div class="csl">Progress</div></div></div>
+          </div>
+          <div class="ccf"><button class="btn bp bs" style="flex:1;justify-content:center" onclick="event.stopPropagation();openDrawer()">View Profile</button><button class="btn bg bs" onclick="event.stopPropagation()">📅 Book</button><button class="btn bg bs" onclick="event.stopPropagation();showToast('Message sent')">💬</button></div>
+        </div>
+
+        <div class="cc c-vi" onclick="openDrawer()" data-name="neel kumar">
+          <div class="cch"><div class="cav" style="background:var(--vl);color:var(--violet)">NK</div><div class="cin"><div class="cna">Neel Kumar</div><div class="csu">Male · 31 yrs · Teacher</div></div><div class="sd on"></div></div>
+          <div class="ccb">
+            <div class="ctags"><span class="ctag" style="background:var(--vl);color:var(--violet)">Grief</span><span class="ctag" style="background:var(--sl);color:var(--sky)">Trauma</span></div>
+            <div class="cstats"><div class="cst"><div class="csv" style="color:var(--indigo)">10</div><div class="csl">Sessions</div></div><div class="cst"><div class="csv" style="color:var(--amber)">45%</div><div class="csl">Severity</div></div><div class="cst"><div class="csv" style="color:var(--teal)">↑65%</div><div class="csl">Progress</div></div></div>
+          </div>
+          <div class="ccf"><button class="btn bp bs" style="flex:1;justify-content:center" onclick="event.stopPropagation();openDrawer()">View Profile</button><button class="btn bg bs" onclick="event.stopPropagation()">📅 Book</button><button class="btn bg bs" onclick="event.stopPropagation();showToast('Message sent')">💬</button></div>
+        </div>
+
+        <div class="cc c-te" onclick="openDrawer()" data-name="sara joshi">
+          <div class="cch"><div class="cav" style="background:var(--tl);color:var(--teal)">SJ</div><div class="cin"><div class="cna">Sara Joshi</div><div class="csu">Female · 28 yrs · Designer</div></div><div class="sd on"></div></div>
+          <div class="ccb">
+            <div class="ctags"><span class="ctag" style="background:var(--tl);color:var(--teal)">Relationship</span><span class="ctag" style="background:var(--il);color:var(--indigo)">Self-esteem</span></div>
+            <div class="cstats"><div class="cst"><div class="csv" style="color:var(--indigo)">5</div><div class="csl">Sessions</div></div><div class="cst"><div class="csv" style="color:var(--green)">30%</div><div class="csl">Severity</div></div><div class="cst"><div class="csv" style="color:var(--teal)">↑50%</div><div class="csl">Progress</div></div></div>
+          </div>
+          <div class="ccf"><button class="btn bp bs" style="flex:1;justify-content:center" onclick="event.stopPropagation();openDrawer()">View Profile</button><button class="btn bg bs" onclick="event.stopPropagation()">📅 Book</button><button class="btn bg bs" onclick="event.stopPropagation();showToast('Message sent')">💬</button></div>
+        </div>
+
+        <div class="cc c-ro" onclick="openDrawer()" data-name="sneha patel">
+          <div class="cch"><div class="cav" style="background:var(--rl);color:var(--rose)">SP</div><div class="cin"><div class="cna">Sneha Patel</div><div class="csu">Female · 22 yrs · Student</div></div><div class="sd ho"></div></div>
+          <div class="ccb">
+            <div class="ctags"><span class="ctag" style="background:var(--rl);color:var(--rose)">Relationship</span><span class="ctag" style="background:var(--al);color:var(--amber)">Anxiety</span></div>
+            <div class="cstats"><div class="cst"><div class="csv" style="color:var(--indigo)">8</div><div class="csl">Sessions</div></div><div class="cst"><div class="csv" style="color:var(--amber)">48%</div><div class="csl">Severity</div></div><div class="cst"><div class="csv" style="color:var(--amber)">→38%</div><div class="csl">Progress</div></div></div>
+          </div>
+          <div class="ccf"><button class="btn bg bs" style="flex:1;justify-content:center" onclick="event.stopPropagation();openDrawer()">View Profile</button><button class="btn bg bs" onclick="event.stopPropagation()">📅 Book</button><button class="btn bg bs" onclick="event.stopPropagation();showToast('Message sent')">💬</button></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- LIST -->
+    <div id="list-view" style="display:none">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;">
+        <table class="ct">
+          <thead><tr><th style="padding-left:14px;width:32px"><input type="checkbox" style="width:13px;height:13px;accent-color:var(--indigo);cursor:pointer"></th><th>Client ↕</th><th>Concern</th><th>Sessions</th><th>Progress</th><th>Risk</th><th>Status</th><th>Last Session</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr onclick="openDrawer()"><td style="padding-left:14px"><input type="checkbox" style="width:13px;height:13px;accent-color:var(--indigo)" onclick="event.stopPropagation()"></td><td><div style="display:flex;align-items:center;gap:10px"><div class="mav" style="background:var(--il);color:var(--indigo)">RK</div><div><div style="font-weight:600">Riya Kapoor</div><div style="font-size:11px;color:var(--muted)">Female · 24 · Student</div></div></div></td><td style="font-size:12.5px">Anxiety, Depression</td><td style="font-weight:700;color:var(--indigo)">18</td><td><div style="display:flex;align-items:center;gap:7px"><div class="pbar"><div class="pf" style="width:68%;background:var(--rose)"></div></div><span style="font-size:12px;font-weight:700;color:var(--rose)">68%</span></div></td><td><span class="badge bhi">High</span></td><td><span class="badge ba">Active</span></td><td style="color:var(--muted);font-size:12.5px">21 Feb</td><td onclick="event.stopPropagation()"><div class="abs"><div class="ai" onclick="openDrawer()">👁</div><div class="ai">📅</div><div class="ai">💬</div></div></td></tr>
+            <tr onclick="openDrawer()"><td style="padding-left:14px"><input type="checkbox" style="width:13px;height:13px;accent-color:var(--indigo)" onclick="event.stopPropagation()"></td><td><div style="display:flex;align-items:center;gap:10px"><div class="mav" style="background:var(--sl);color:var(--sky)">AM</div><div><div style="font-weight:600">Arjun Mehta</div><div style="font-size:11px;color:var(--muted)">Male · 19 · Student</div></div></div></td><td style="font-size:12.5px">Academic Stress, Anxiety</td><td style="font-weight:700;color:var(--indigo)">15</td><td><div style="display:flex;align-items:center;gap:7px"><div class="pbar"><div class="pf" style="width:55%;background:var(--amber)"></div></div><span style="font-size:12px;font-weight:700;color:var(--amber)">55%</span></div></td><td><span class="badge bme">Medium</span></td><td><span class="badge ba">Active</span></td><td style="color:var(--muted);font-size:12.5px">20 Feb</td><td onclick="event.stopPropagation()"><div class="abs"><div class="ai">👁</div><div class="ai">📅</div><div class="ai">💬</div></div></td></tr>
+            <tr onclick="openDrawer()"><td style="padding-left:14px"><input type="checkbox" style="width:13px;height:13px;accent-color:var(--indigo)" onclick="event.stopPropagation()"></td><td><div style="display:flex;align-items:center;gap:10px"><div class="mav" style="background:var(--al);color:var(--amber)">PS</div><div><div style="font-weight:600">Priya Sharma</div><div style="font-size:11px;color:var(--muted)">Female · 26 · Professional</div></div></div></td><td style="font-size:12.5px">Career, Work-Life Balance</td><td style="font-weight:700;color:var(--indigo)">12</td><td><div style="display:flex;align-items:center;gap:7px"><div class="pbar"><div class="pf" style="width:80%;background:var(--teal)"></div></div><span style="font-size:12px;font-weight:700;color:var(--teal)">80%</span></div></td><td><span class="badge blo">Low</span></td><td><span class="badge ba">Active</span></td><td style="color:var(--muted);font-size:12.5px">20 Feb</td><td onclick="event.stopPropagation()"><div class="abs"><div class="ai">👁</div><div class="ai">📅</div><div class="ai">💬</div></div></td></tr>
+            <tr onclick="openDrawer()"><td style="padding-left:14px"><input type="checkbox" style="width:13px;height:13px;accent-color:var(--indigo)" onclick="event.stopPropagation()"></td><td><div style="display:flex;align-items:center;gap:10px"><div class="mav" style="background:var(--vl);color:var(--violet)">NK</div><div><div style="font-weight:600">Neel Kumar</div><div style="font-size:11px;color:var(--muted)">Male · 31 · Teacher</div></div></div></td><td style="font-size:12.5px">Grief, Trauma</td><td style="font-weight:700;color:var(--indigo)">10</td><td><div style="display:flex;align-items:center;gap:7px"><div class="pbar"><div class="pf" style="width:65%;background:var(--sky)"></div></div><span style="font-size:12px;font-weight:700;color:var(--sky)">65%</span></div></td><td><span class="badge bme">Medium</span></td><td><span class="badge ba">Active</span></td><td style="color:var(--muted);font-size:12.5px">18 Feb</td><td onclick="event.stopPropagation()"><div class="abs"><div class="ai">👁</div><div class="ai">📅</div><div class="ai">💬</div></div></td></tr>
+            <tr onclick="openDrawer()"><td style="padding-left:14px"><input type="checkbox" style="width:13px;height:13px;accent-color:var(--indigo)" onclick="event.stopPropagation()"></td><td><div style="display:flex;align-items:center;gap:10px"><div class="mav" style="background:var(--rl);color:var(--rose)">SP</div><div><div style="font-weight:600">Sneha Patel</div><div style="font-size:11px;color:var(--muted)">Female · 22 · Student</div></div></div></td><td style="font-size:12.5px">Relationship, Anxiety</td><td style="font-weight:700;color:var(--indigo)">8</td><td><div style="display:flex;align-items:center;gap:7px"><div class="pbar"><div class="pf" style="width:38%;background:var(--amber)"></div></div><span style="font-size:12px;font-weight:700;color:var(--amber)">38%</span></div></td><td><span class="badge bme">Medium</span></td><td><span class="badge bh">On Hold</span></td><td style="color:var(--muted);font-size:12.5px">18 Feb</td><td onclick="event.stopPropagation()"><div class="abs"><div class="ai">👁</div><div class="ai">📅</div><div class="ai">💬</div></div></td></tr>
+          </tbody>
+        </table>
+        <div class="pg"><div class="pi">Showing 1–5 of 54 clients</div><div class="pbs"><div class="pb2">‹</div><div class="pb2 active">1</div><div class="pb2">2</div><div class="pb2">3</div><div class="pb2">…</div><div class="pb2">6</div><div class="pb2">›</div></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- DRAWER OVERLAY -->
+<div class="do" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="dr" id="client-drawer">
+  <div class="drh">
+    <div class="drt">Client Profile</div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn bp bs" onclick="location.href='appointments.html'">📅 Book Session</button>
+      <div class="drc" onclick="closeDrawer()">✕</div>
+    </div>
+  </div>
+  <div class="drb">
+    <div class="ph2">
+      <div class="pav">RK</div>
+      <div class="pin">
+        <h2>Riya Kapoor</h2>
+        <p>Female · 24 yrs · Student · Delhi</p>
+        <div><span class="ptag">Anxiety</span><span class="ptag">Depression</span><span class="ptag" style="background:var(--rl);color:var(--rose)">🚨 High Risk</span></div>
+      </div>
+    </div>
+
+    <div class="drs">
+      <div class="drst">Personal Info</div>
+      <div class="ig">
+        <div class="ii"><label>Date of Birth</label><div class="val">12 March 2001</div></div>
+        <div class="ii"><label>Contact</label><div class="val">+91 98765 43210</div></div>
+        <div class="ii"><label>Email</label><div class="val">riya.k@email.com</div></div>
+        <div class="ii"><label>Emergency Contact</label><div class="val">Mrs. Kapoor (Mother)</div></div>
+        <div class="ii"><label>Referred By</label><div class="val">College Health Center</div></div>
+        <div class="ii"><label>Start Date</label><div class="val">15 Sep 2025</div></div>
+      </div>
+    </div>
+
+    <div class="drs">
+      <div class="drst">Clinical Overview</div>
+      <div class="ig">
+        <div class="ii"><label>Primary Concern</label><div class="val">Generalized Anxiety</div></div>
+        <div class="ii"><label>Secondary</label><div class="val">Mild Depression</div></div>
+        <div class="ii"><label>PHQ-9 Score</label><div class="val" style="color:var(--rose)">18/27 (Moderate-Severe)</div></div>
+        <div class="ii"><label>GAD-7 Score</label><div class="val" style="color:var(--amber)">12/21 (Moderate)</div></div>
+        <div class="ii"><label>Sessions Completed</label><div class="val">18 / 20 planned</div></div>
+        <div class="ii"><label>Next Session</label><div class="val">Mon, 23 Feb · 2:00 PM</div></div>
+      </div>
+    </div>
+
+    <div class="drs">
+      <div class="drst">Progress Tracking</div>
+      <div class="pr"><div class="prh"><div class="prl">PHQ-9 Severity</div><div class="prv" style="color:var(--rose)">68%</div></div><div class="prb"><div class="prf" style="width:68%;background:var(--rose)"></div></div></div>
+      <div class="pr"><div class="prh"><div class="prl">Anxiety Management</div><div class="prv" style="color:var(--amber)">45%</div></div><div class="prb"><div class="prf" style="width:45%;background:var(--amber)"></div></div></div>
+      <div class="pr"><div class="prh"><div class="prl">Sleep Quality</div><div class="prv" style="color:var(--sky)">60%</div></div><div class="prb"><div class="prf" style="width:60%;background:var(--sky)"></div></div></div>
+      <div class="pr"><div class="prh"><div class="prl">Coping Skills</div><div class="prv" style="color:var(--teal)">55%</div></div><div class="prb"><div class="prf" style="width:55%;background:var(--teal)"></div></div></div>
+    </div>
+
+    <div class="drs">
+      <div class="drst">Test Results</div>
+      <div class="tri"><div class="tric" style="background:var(--rl)">📋</div><div class="trii"><div class="trin">PHQ-9 Depression Scale</div><div class="trid">22 Feb 2026</div></div><div class="trs" style="color:var(--rose)">18/27</div></div>
+      <div class="tri"><div class="tric" style="background:var(--al)">📋</div><div class="trii"><div class="trin">GAD-7 Anxiety Scale</div><div class="trid">15 Feb 2026</div></div><div class="trs" style="color:var(--amber)">12/21</div></div>
+      <div class="tri"><div class="tric" style="background:var(--sl)">📋</div><div class="trii"><div class="trin">Academic Stress Scale</div><div class="trid">10 Feb 2026</div></div><div class="trs" style="color:var(--sky)">32/50</div></div>
+    </div>
+
+    <div class="drs">
+      <div class="drst">Session Log (Last 3)</div>
+      <div class="sli"><div class="sln">#18</div><div class="sld">23 Feb 2026</div><div class="slno">In Progress – anxiety presentation practice</div><span class="badge bme" style="font-size:10px">Now</span></div>
+      <div class="sli"><div class="sln">#17</div><div class="sld">21 Feb 2026</div><div class="slno">"PHQ-9 dropped to 18, coping strategies reviewed"</div><span class="badge ba" style="font-size:10px">Done</span></div>
+      <div class="sli"><div class="sln">#16</div><div class="sld">17 Feb 2026</div><div class="slno">"Sleep improved to 6 hrs, breathing exercises"</div><span class="badge ba" style="font-size:10px">Done</span></div>
+    </div>
+
+    <div class="drs">
+      <div class="drst">Counsellor Notes</div>
+      <textarea class="na" style="min-height:90px">Client showing incremental improvement. High anxiety around exams and presentations. Family dynamics contributing to depression. Plan: continue CBT + introduce relaxation techniques. Consider referral to psychiatry if PHQ-9 remains above 15 by session 20.</textarea>
+    </div>
+  </div>
+  <div class="drf">
+    <button class="btn bg bs" style="flex:1;justify-content:center" onclick="showToast('Message sent to Riya')">💬 Message</button>
+    <button class="btn bg bs" style="flex:1;justify-content:center" onclick="showToast('Report generated')">📄 Report</button>
+    <button class="btn bg bs" style="flex:1;justify-content:center" onclick="showToast('Referral created')">🔗 Referral</button>
+    <button class="btn bp bs" style="flex:2;justify-content:center" onclick="location.href='appointments.html'">📅 Book Session</button>
+  </div>
+</div>
+
+<!-- ADD CLIENT MODAL -->
+<div class="mo" id="add-modal">
+  <div class="md">
+    <div class="mc" onclick="closeModal()">✕</div>
+    <div class="mt">＋ Add New Client</div>
+    <div class="ms">Register a new client profile</div>
+    <div class="frow"><div class="fg"><label class="fl">First Name</label><input type="text" class="fc" placeholder="e.g. Riya"></div><div class="fg"><label class="fl">Last Name</label><input type="text" class="fc" placeholder="e.g. Kapoor"></div></div>
+    <div class="frow"><div class="fg"><label class="fl">Date of Birth</label><input type="date" class="fc"></div><div class="fg"><label class="fl">Gender</label><select class="fc"><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option></select></div></div>
+    <div class="frow"><div class="fg"><label class="fl">Phone</label><input type="tel" class="fc" placeholder="+91 98765 43210"></div><div class="fg"><label class="fl">Email</label><input type="email" class="fc" placeholder="client@email.com"></div></div>
+    <div class="frow"><div class="fg"><label class="fl">Primary Concern</label><select class="fc"><option>Anxiety</option><option>Depression</option><option>Stress</option><option>Grief</option><option>Career</option><option>Relationship</option><option>Trauma</option></select></div><div class="fg"><label class="fl">Referred By</label><select class="fc"><option>Self-referral</option><option>School/College</option><option>Doctor</option><option>Family</option><option>Online</option></select></div></div>
+    <div class="frow"><div class="fg"><label class="fl">Occupation</label><input type="text" class="fc" placeholder="Student, Professional…"></div><div class="fg"><label class="fl">Emergency Contact</label><input type="text" class="fc" placeholder="Name & relationship"></div></div>
+    <div class="fg"><label class="fl">Initial Notes</label><textarea class="na" placeholder="Any background info, presenting concerns…"></textarea></div>
+    <div class="ff"><button class="btn bg" onclick="closeModal()" style="flex:1;justify-content:center">Cancel</button><button class="btn bp" onclick="closeModal();showToast('Client added!')" style="flex:2;justify-content:center">✅ Add Client</button></div>
+  </div>
+</div>
+
+<div id="toast">✓ Done</div>
+
+<script>
+function setView(v){
+  document.getElementById('grid-view').style.display=v==='grid'?'block':'none';
+  document.getElementById('list-view').style.display=v==='list'?'block':'none';
+  document.getElementById('btn-grid').classList.toggle('active',v==='grid');
+  document.getElementById('btn-list').classList.toggle('active',v==='list');
+}
+function filterClients(q){
+  document.querySelectorAll('#clients-grid .cc').forEach(c=>{
+    c.style.display=(c.dataset.name||'').includes(q.toLowerCase())?'':'none';
+  });
+}
+function openDrawer(){
+  document.getElementById('client-drawer').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+}
+function closeDrawer(){
+  document.getElementById('client-drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+}
+function openModal(){document.getElementById('add-modal').classList.add('open');}
+function closeModal(){document.getElementById('add-modal').classList.remove('open');}
+document.getElementById('add-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+function showToast(msg){const t=document.getElementById('toast');t.textContent='✓ '+msg;t.style.opacity='1';setTimeout(()=>t.style.opacity='0',2500);}
+</script>
+</body>
+</html>
